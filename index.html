@@ -128,32 +128,51 @@ body.done #thanks{display:block}
   var no=document.getElementById('no'), yes=document.getElementById('yes'), slot=document.getElementById('slot');
   var mx=-999,my=-999,fled=false;
 
-  var snd=new Audio('fah.mp3');
-  snd.preload='auto';
-  snd.loop=false;
-  var lastPlay=0;
+  /* sound separated from the dodging logic */
+  var snd=null,lastPlay=0,primed=false;
+  try{snd=new Audio('fah.mp3');snd.preload='auto';snd.loop=false}catch(err){}
+
+  function canSound(e){
+    if(!e)return true;
+    var t=e.type;
+    if(t==='touchstart'||t==='touchmove'||t==='focus'||t==='contextmenu')return false;
+    if(e.pointerType==='touch'&&t!=='pointerup')return false;
+    return true;
+  }
   function playNo(){
+    if(!snd)return;
     var n=Date.now();
-    if(n-lastPlay<100)return;
+    if(n-lastPlay<150)return;
     lastPlay=n;
     try{
-      snd.pause();
       snd.currentTime=0;
       var p=snd.play();
-      if(p&&p.catch)p.catch(function(){lastPlay=0});
-    }catch(e){}
+      if(p&&p.then)p.then(function(){primed=true},function(){lastPlay=0});
+    }catch(err){lastPlay=0}
   }
-  document.addEventListener('pointerdown',function u(){
-    snd.muted=true;
-    snd.play().then(function(){snd.pause();snd.currentTime=0;snd.muted=false}).catch(function(){snd.muted=false});
-    document.removeEventListener('pointerdown',u);
-  },{once:true});
+
+  function prime(e){
+    if(primed||!snd)return;
+    if(e&&e.target&&no.contains(e.target))return;
+    primed=true;
+    ['touchend','click','keydown'].forEach(function(t){document.removeEventListener(t,prime,true)});
+    if(!snd.paused)return;
+    try{
+      snd.muted=true;
+      var p=snd.play();
+      if(p&&p.then)p.then(function(){snd.pause();snd.currentTime=0;snd.muted=false},function(){snd.muted=false;primed=false});
+      else snd.muted=false;
+    }catch(err){snd.muted=false}
+  }
+  ['touchend','click','keydown'].forEach(function(t){document.addEventListener(t,prime,true)});
 
   function place(x,y){no.style.left=x+'px';no.style.top=y+'px'}
   function home(){var r=slot.getBoundingClientRect();no.style.width=r.width+'px';no.style.height=r.height+'px';place(r.left,r.top)}
   function overlaps(x,y,w,h,r,pad){return x<r.right+pad&&x+w>r.left-pad&&y<r.bottom+pad&&y+h>r.top-pad}
 
+  var lastFlee=0;
   function flee(){
+    var t=Date.now();if(t-lastFlee<40)return;lastFlee=t;
     fled=true;
     var w=no.offsetWidth,h=no.offsetHeight,m=12,W=window.innerWidth,H=window.innerHeight;
     var maxX=Math.max(m,W-w-m),maxY=Math.max(m,H-h-m),yr=yes.getBoundingClientRect(),best=null,bestD=-1;
@@ -168,21 +187,21 @@ body.done #thanks{display:block}
   }
   function dodge(e){
     if(e){if(e.cancelable)e.preventDefault();if(e.stopPropagation)e.stopPropagation()}
-    playNo();
     flee();
+    if(canSound(e))playNo();
     if(document.activeElement===no)no.blur();
   }
   ['pointerenter','pointerover','mouseenter','mouseover','pointerdown','mousedown','touchstart','touchmove','touchend','click','focus','dblclick','contextmenu'].forEach(function(t){
     no.addEventListener(t,dodge,{passive:false});
   });
-  function track(x,y){
+  function track(x,y,e){
     mx=x;my=y;
     var r=no.getBoundingClientRect(),pad=70;
-    if(x>r.left-pad&&x<r.right+pad&&y>r.top-pad&&y<r.bottom+pad){playNo();flee();}
+    if(x>r.left-pad&&x<r.right+pad&&y>r.top-pad&&y<r.bottom+pad){flee();if(canSound(e))playNo();}
   }
-  document.addEventListener('pointermove',function(e){track(e.clientX,e.clientY)},{passive:true});
-  document.addEventListener('touchstart',function(e){var t=e.touches[0];if(t)track(t.clientX,t.clientY)},{passive:true});
-  document.addEventListener('touchmove',function(e){var t=e.touches[0];if(t)track(t.clientX,t.clientY)},{passive:true});
+  document.addEventListener('pointermove',function(e){track(e.clientX,e.clientY,e)},{passive:true});
+  document.addEventListener('touchstart',function(e){var t=e.touches[0];if(t)track(t.clientX,t.clientY,e)},{passive:true});
+  document.addEventListener('touchmove',function(e){var t=e.touches[0];if(t)track(t.clientX,t.clientY,e)},{passive:true});
   document.addEventListener('keydown',function(e){if(document.activeElement===no)dodge(e)});
 
   function sync(){
