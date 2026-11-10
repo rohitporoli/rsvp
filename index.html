@@ -128,6 +128,27 @@ body.done #thanks{display:block}
   var no=document.getElementById('no'), yes=document.getElementById('yes'), slot=document.getElementById('slot');
   var mx=-999,my=-999,fled=false;
 
+  var snd=new Audio('fah.mp3');
+  snd.preload='auto';
+  snd.loop=false;
+  var lastPlay=0;
+  function playNo(){
+    var n=Date.now();
+    if(n-lastPlay<100)return;
+    lastPlay=n;
+    try{
+      snd.pause();
+      snd.currentTime=0;
+      var p=snd.play();
+      if(p&&p.catch)p.catch(function(){lastPlay=0});
+    }catch(e){}
+  }
+  document.addEventListener('pointerdown',function u(){
+    snd.muted=true;
+    snd.play().then(function(){snd.pause();snd.currentTime=0;snd.muted=false}).catch(function(){snd.muted=false});
+    document.removeEventListener('pointerdown',u);
+  },{once:true});
+
   function place(x,y){no.style.left=x+'px';no.style.top=y+'px'}
   function home(){var r=slot.getBoundingClientRect();no.style.width=r.width+'px';no.style.height=r.height+'px';place(r.left,r.top)}
   function overlaps(x,y,w,h,r,pad){return x<r.right+pad&&x+w>r.left-pad&&y<r.bottom+pad&&y+h>r.top-pad}
@@ -147,6 +168,7 @@ body.done #thanks{display:block}
   }
   function dodge(e){
     if(e){if(e.cancelable)e.preventDefault();if(e.stopPropagation)e.stopPropagation()}
+    playNo();
     flee();
     if(document.activeElement===no)no.blur();
   }
@@ -156,7 +178,7 @@ body.done #thanks{display:block}
   function track(x,y){
     mx=x;my=y;
     var r=no.getBoundingClientRect(),pad=70;
-    if(x>r.left-pad&&x<r.right+pad&&y>r.top-pad&&y<r.bottom+pad)flee();
+    if(x>r.left-pad&&x<r.right+pad&&y>r.top-pad&&y<r.bottom+pad){playNo();flee();}
   }
   document.addEventListener('pointermove',function(e){track(e.clientX,e.clientY)},{passive:true});
   document.addEventListener('touchstart',function(e){var t=e.touches[0];if(t)track(t.clientX,t.clientY)},{passive:true});
