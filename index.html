@@ -175,10 +175,10 @@ body.done #thanks{display:block}
 
   yes.addEventListener('click',function(){
     document.body.classList.add('done');
-    var bits=['♥','♡','✳'],cols=['#bf757b','#a85c68','#d9a3a8','#c7a29f'];
+    var H='M12 20.5S3.5 15 3.5 8.9A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.3C20.5 15 12 20.5 12 20.5z',S='<svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"',bits=[S+' fill="currentColor"><path d="'+H+'"/></svg>',S+' fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="'+H+'"/></svg>',S+' fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/></svg>'],cols=['#bf757b','#a85c68','#d9a3a8','#c7a29f'];
     for(var i=0;i<50;i++){
       var c=document.createElement('span');c.className='confetti';
-      c.textContent=bits[i%bits.length];c.style.color=cols[i%cols.length];
+      c.innerHTML=bits[i%bits.length];c.style.color=cols[i%cols.length];
       c.style.left=(Math.random()*100)+'vw';c.style.fontSize=(18+Math.random()*26)+'px';
       c.style.animationDuration=(2.5+Math.random()*3)+'s';c.style.animationDelay=(Math.random()*1.2)+'s';
       document.body.appendChild(c);
