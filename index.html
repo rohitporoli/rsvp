@@ -30,6 +30,7 @@
   --bg:#fbf8f4; --card:#fefcf9; --edge:#ece5df; --ink:#463a36; --rose:#a85c68; --btn:#bf757b; --btn-ink:#fff;
   --eyebrow:#c0707c; --sub:#8c7b72; --orn:#c58f95; --no-bg:#fffefd; --no-line:#d9d2cc; --no-ink:#6f625c;
   --glow:rgba(196,128,128,.22);
+  --env:#ecd6d2; --env-back:#dfc3bf; --env-flap:#f3e1de;
   --sh-card:0 40px 140px var(--glow),0 12px 44px rgba(196,128,128,.12);
   --sh-yes:0 18px 32px -10px rgba(191,117,123,.65),0 6px 12px -4px rgba(191,117,123,.35);
   --sh-no:0 14px 28px -12px rgba(70,58,54,.3),0 4px 10px -4px rgba(70,58,54,.14);
@@ -44,13 +45,13 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#181112; --card:#221819; --edge:#3a2c2e; --ink:#f4e9e4; --rose:#e19aa4; --eyebrow:#e0929c; --sub:#bda99f; --orn:#b98c8c;
-    --no-bg:#2b2023; --no-line:#4c3d40; --no-ink:#d9c8c0; --glow:rgba(0,0,0,.6);
+    --no-bg:#2b2023; --no-line:#4c3d40; --no-ink:#d9c8c0; --glow:rgba(0,0,0,.6); --env:#4b3538; --env-back:#3b2a2d; --env-flap:#5a4144;
     --sh-no:0 14px 28px -12px rgba(0,0,0,.8),0 4px 10px -4px rgba(0,0,0,.5); color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#181112; --card:#221819; --edge:#3a2c2e; --ink:#f4e9e4; --rose:#e19aa4; --eyebrow:#e0929c; --sub:#bda99f; --orn:#b98c8c;
-  --no-bg:#2b2023; --no-line:#4c3d40; --no-ink:#d9c8c0; --glow:rgba(0,0,0,.6);
+  --no-bg:#2b2023; --no-line:#4c3d40; --no-ink:#d9c8c0; --glow:rgba(0,0,0,.6); --env:#4b3538; --env-back:#3b2a2d; --env-flap:#5a4144;
   --sh-no:0 14px 28px -12px rgba(0,0,0,.8),0 4px 10px -4px rgba(0,0,0,.5); color-scheme:dark;
 }
 html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
@@ -96,9 +97,75 @@ body.done #thanks{display:block}
 .confetti{position:fixed;top:-30px;z-index:9;pointer-events:none;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(112vh) rotate(540deg)}}
 @media (prefers-reduced-motion:reduce){.confetti{animation-duration:2s!important}}
+
+main{position:relative;overflow:hidden;transform-origin:50% 0}
+body.covered{overflow:hidden;height:100svh}
+body.covered main{opacity:0;animation:none}
+body.covered #no,body.unfold #no{visibility:hidden}
+#cover{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;align-content:center;gap:clamp(22px,5vh,44px);
+  cursor:pointer;outline:0;padding:env(safe-area-inset-top,0px) 16px env(safe-area-inset-bottom,0px);-webkit-tap-highlight-color:transparent}
+#cover.leaving{opacity:0;pointer-events:none;transition:opacity .8s ease}
+#cover .line{margin:0;font-family:"Newsreader",Georgia,serif;font-style:italic;font-size:clamp(20px,3.4vh + 1vw,30px);color:var(--rose);letter-spacing:-.01em;text-align:center}
+#cover .hint{margin:0;font-size:clamp(13px,2vh,16px);color:var(--sub);letter-spacing:.04em;animation:pulse 2.2s ease-in-out infinite}
+#cover.opening .hint{animation:none;opacity:0;transition:opacity .25s}
+@keyframes pulse{50%{opacity:.35}}
+.env{position:relative;width:min(380px,78vw,56vh);aspect-ratio:10/7;perspective:900px;animation:bob 4.5s ease-in-out infinite;filter:drop-shadow(0 28px 36px var(--glow))}
+#cover.opening .env{animation:none}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-.6deg)}}
+.env .back{position:absolute;inset:0;background:var(--env-back);border-radius:6px}
+.env .letter{position:absolute;left:7%;right:7%;top:7%;height:82%;background:var(--card);border:1px solid var(--edge);border-radius:4px;z-index:2;
+  display:grid;place-items:center;align-content:center;gap:.5em;text-align:center;color:var(--rose);
+  font-family:"Newsreader",Georgia,serif;font-style:italic;font-size:clamp(15px,2.4vh + .6vw,22px);
+  transition:transform 1s cubic-bezier(.25,.9,.3,1) .45s}
+.env .letter svg{width:1.4em;height:1.4em}
+.env .front{position:absolute;inset:0;background:var(--env);border-radius:6px;z-index:3;clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%)}
+.env .flap{position:absolute;left:0;right:0;top:0;height:58%;background:var(--env-flap);z-index:4;transform-origin:50% 0;
+  clip-path:polygon(0 0,100% 0,50% 100%);transition:transform .6s ease,z-index 0s .3s}
+.env .seal{position:absolute;left:50%;top:58%;width:17%;aspect-ratio:1;z-index:5;transform:translate(-50%,-50%);border-radius:50%;
+  background:var(--btn);color:var(--btn-ink);display:grid;place-items:center;box-shadow:0 6px 14px -4px rgba(191,117,123,.7),inset 0 -3px 6px rgba(0,0,0,.12);
+  animation:beat 2.2s ease-in-out infinite;transition:opacity .25s}
+.env .seal svg{width:52%;height:52%}
+@keyframes beat{0%,60%,100%{transform:translate(-50%,-50%) scale(1)}15%{transform:translate(-50%,-50%) scale(1.1)}30%{transform:translate(-50%,-50%) scale(1)}}
+#cover.opening .seal{animation:none;opacity:0}
+#cover.opening .flap{transform:rotateX(180deg);z-index:1}
+#cover.opening .letter{transform:translateY(-52%)}
+@media (prefers-reduced-motion:reduce){.env,.seal,#cover .hint{animation:none!important}.env .letter,.env .flap{transition-duration:.01s!important;transition-delay:0s!important}}
+
+.env .seal::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--btn);animation:ring 2.2s ease-out infinite;pointer-events:none}
+@keyframes ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+main::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
+  background:
+   linear-gradient(to bottom,transparent calc(33.333% - 46px),rgba(70,58,54,.12) calc(33.333% - 1px),rgba(255,255,255,.14) 33.333%,transparent calc(33.333% + 46px)),
+   linear-gradient(to bottom,transparent calc(66.666% - 46px),rgba(70,58,54,.12) calc(66.666% - 1px),rgba(255,255,255,.14) 66.666%,transparent calc(66.666% + 46px))}
+body.unfold main{animation:unfold 1.6s cubic-bezier(.22,.8,.24,1) both}
+body.unfold main::after{animation:crease 1.8s ease-out forwards}
+body.unfold #ask>*{animation:rise .7s ease-out .85s both}
+@keyframes unfold{
+  0%{opacity:0;transform:perspective(1500px) translateY(7vh) rotateX(-84deg) scale(.5)}
+  30%{opacity:1;transform:perspective(1500px) translateY(3vh) rotateX(-52deg) scale(.7)}
+  65%{transform:perspective(1500px) translateY(0) rotateX(-14deg) scale(.93)}
+  85%{transform:perspective(1500px) rotateX(3deg) scale(1.005)}
+  100%{opacity:1;transform:perspective(1500px) rotateX(0) scale(1)}}
+@keyframes crease{0%,55%{opacity:1}100%{opacity:0}}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){body.unfold main,body.unfold main::after,body.unfold #ask>*{animation-duration:.01s!important;animation-delay:0s!important}}
 </style>
 </head>
-<body>
+<body class="covered">
+<div id="cover" role="button" tabindex="0" aria-label="Tap to open your invitation">
+  <p class="line">We have a little question for you.</p>
+  <div class="env" aria-hidden="true">
+    <div class="back"></div>
+    <div class="letter">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 20.5S3.5 15 3.5 8.9A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.3C20.5 15 12 20.5 12 20.5z"/></svg>
+      <span>You&rsquo;re invited</span>
+    </div>
+    <div class="front"></div>
+    <div class="flap"></div>
+    <div class="seal"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"><path d="M7.5 4.5L17 12.5l-4.2.9 2.4 5.2-2.2 1.1-2.4-5.1-3.1 3z"/><path d="M4 8.5H2.2M5 5L3.7 3.7M8.5 3.4V1.7" fill="none" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+  </div>
+  <p class="hint">Tap to open</p>
+</div>
 <main>
   <section id="ask">
     <p class="eyebrow">A little note from us</p>
@@ -133,7 +200,7 @@ body.done #thanks{display:block}
   try{snd=new Audio('fah.mp3');snd.preload='auto';snd.loop=false}catch(err){}
 
   function canSound(e){
-    if(!e)return true;
+    if(!e||unlocked)return true;
     var t=e.type;
     if(t==='touchstart'||t==='touchmove'||t==='focus'||t==='contextmenu')return false;
     if(e.pointerType==='touch'&&t!=='pointerup')return false;
@@ -151,20 +218,43 @@ body.done #thanks{display:block}
     }catch(err){lastPlay=0}
   }
 
-  function prime(e){
-    if(primed||!snd)return;
-    if(e&&e.target&&no.contains(e.target))return;
-    primed=true;
-    ['touchend','click','keydown'].forEach(function(t){document.removeEventListener(t,prime,true)});
-    if(!snd.paused)return;
+  /* the cover tap is the first user gesture: it unlocks audio for the whole session */
+  var unlocked=false;
+  function unlock(){
+    if(!snd||unlocked)return;
     try{
       snd.muted=true;
       var p=snd.play();
-      if(p&&p.then)p.then(function(){snd.pause();snd.currentTime=0;snd.muted=false},function(){snd.muted=false;primed=false});
-      else snd.muted=false;
+      var done=function(ok){try{snd.pause();snd.currentTime=0}catch(e){}snd.muted=false;if(ok){unlocked=true;primed=true}};
+      if(p&&p.then)p.then(function(){done(true)},function(){done(false)});
+      else done(true);
     }catch(err){snd.muted=false}
   }
-  ['touchend','click','keydown'].forEach(function(t){document.addEventListener(t,prime,true)});
+  var cover=document.getElementById('cover'),main=document.querySelector('main'),opened=false;
+  function openCover(){
+    if(opened)return;opened=true;
+    unlock();
+    cover.classList.add('opening');
+    setTimeout(function(){
+      var b=document.body;
+      b.classList.add('unfold');
+      b.classList.remove('covered');
+      cover.classList.add('leaving');
+      var finished=false;
+      function end(){
+        if(finished)return;finished=true;
+        b.classList.remove('unfold');
+        cover.remove();
+        home();
+      }
+      main.addEventListener('animationend',function(e){if(e.target===main&&e.animationName==='unfold')end()});
+      setTimeout(end,2200);
+    },1500);
+  }
+  cover.addEventListener('click',openCover);
+  cover.addEventListener('touchend',function(e){e.preventDefault();openCover()},{passive:false});
+  cover.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();openCover()}});
+  cover.focus({preventScroll:true});
 
   function place(x,y){no.style.left=x+'px';no.style.top=y+'px'}
   function home(){var r=slot.getBoundingClientRect();no.style.width=r.width+'px';no.style.height=r.height+'px';place(r.left,r.top)}
