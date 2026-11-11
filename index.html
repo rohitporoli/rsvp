@@ -220,33 +220,15 @@ body.unfold #ask>*{animation:rise .7s ease-out .85s both}
   }
   loadBuf();
 
-  /* A constant, inaudible hiss so the audio hardware / Bluetooth link never goes idle. */
-  var keep=null;
-  function startKeep(){
-    if(!ctx||keep)return;
-    try{
-      var kb=ctx.createBuffer(1,22050,22050),d=kb.getChannelData(0);
-      for(var i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*0.0002;
-      keep=ctx.createBufferSource();keep.buffer=kb;keep.loop=true;
-      var g=ctx.createGain();g.gain.value=1;
-      keep.connect(g);g.connect(ctx.destination);keep.start(0);
-    }catch(err){keep=null}
-  }
-  function stopKeep(){
-    if(keep){try{keep.stop(0)}catch(err){}keep=null}
-  }
   function wake(){
     if(ctx&&ctx.state!=='running'){try{var r=ctx.resume();if(r&&r.catch)r.catch(function(){})}catch(err){}}
   }
   ['touchstart','touchend','pointerdown','click'].forEach(function(t){document.addEventListener(t,wake,{capture:true,passive:true})});
-  document.addEventListener('visibilitychange',function(){
-    if(document.hidden){if(ctx&&keep){try{ctx.suspend()}catch(err){}}}
-    else wake();
-  });
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)wake()});
 
   function playNo(){
     var n=Date.now();
-    if(n-lastPlay<220)return; 
+    if(n-lastPlay<220)return;
     lastPlay=n;
     if(ctx&&buf){
       try{
@@ -276,8 +258,7 @@ body.unfold #ask>*{animation:rise .7s ease-out .85s both}
       try{
         wake();
         var b=ctx.createBuffer(1,1,22050),sb=ctx.createBufferSource();
-        sb.buffer=b;sb.connect(ctx.destination);sb.start(0); 
-        startKeep();
+        sb.buffer=b;sb.connect(ctx.destination);sb.start(0);
         loadBuf();
       }catch(err){}
     }
@@ -365,7 +346,6 @@ body.unfold #ask>*{animation:rise .7s ease-out .85s both}
   home();
 
   yes.addEventListener('click',function(){
-    stopKeep();
     document.body.classList.add('done');
     var H='M12 20.5S3.5 15 3.5 8.9A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.3C20.5 15 12 20.5 12 20.5z',S='<svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"',bits=[S+' fill="currentColor"><path d="'+H+'"/></svg>',S+' fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="'+H+'"/></svg>',S+' fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/></svg>'],cols=['#bf757b','#a85c68','#d9a3a8','#c7a29f'];
     for(var i=0;i<50;i++){
