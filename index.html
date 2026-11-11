@@ -153,7 +153,7 @@ body.unfold #ask>*{animation:rise .7s ease-out .85s both}
 </head>
 <body class="covered">
 <div id="cover" role="button" tabindex="0" aria-label="Tap to open your invitation">
-  <p class="line">We have a little question for you.</p>
+  <p class="line">We have a little question for you</p>
   <div class="env" aria-hidden="true">
     <div class="back"></div>
     <div class="letter">
@@ -206,29 +206,89 @@ body.unfold #ask>*{animation:rise .7s ease-out .85s both}
     if(e.pointerType==='touch'&&t!=='pointerup')return false;
     return true;
   }
-  function playNo(){
-    if(!snd)return;
-    var n=Date.now();
-    if(n-lastPlay<150)return;
-    lastPlay=n;
+  var AC=window.AudioContext||window.webkitAudioContext,ctx=null,buf=null,cur=null;
+  try{ctx=new AC({latencyHint:'interactive'})}catch(err){try{ctx=new AC()}catch(e2){ctx=null}}
+  var loading=false;
+  function loadBuf(){
+    if(!ctx||buf||loading)return;
+    loading=true;
     try{
+      fetch('fah.mp3').then(function(r){return r.arrayBuffer()}).then(function(ab){
+        ctx.decodeAudioData(ab,function(b){buf=b;loading=false},function(){loading=false});
+      }).catch(function(){loading=false});
+    }catch(err){loading=false}
+  }
+  loadBuf();
+
+  /* A constant, inaudible hiss so the audio hardware / Bluetooth link never goes idle. */
+  var keep=null;
+  function startKeep(){
+    if(!ctx||keep)return;
+    try{
+      var kb=ctx.createBuffer(1,22050,22050),d=kb.getChannelData(0);
+      for(var i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*0.0002;
+      keep=ctx.createBufferSource();keep.buffer=kb;keep.loop=true;
+      var g=ctx.createGain();g.gain.value=1;
+      keep.connect(g);g.connect(ctx.destination);keep.start(0);
+    }catch(err){keep=null}
+  }
+  function stopKeep(){
+    if(keep){try{keep.stop(0)}catch(err){}keep=null}
+  }
+  function wake(){
+    if(ctx&&ctx.state!=='running'){try{var r=ctx.resume();if(r&&r.catch)r.catch(function(){})}catch(err){}}
+  }
+  ['touchstart','touchend','pointerdown','click'].forEach(function(t){document.addEventListener(t,wake,{capture:true,passive:true})});
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){if(ctx&&keep){try{ctx.suspend()}catch(err){}}}
+    else wake();
+  });
+
+  function playNo(){
+    var n=Date.now();
+    if(n-lastPlay<220)return; 
+    lastPlay=n;
+    if(ctx&&buf){
+      try{
+        wake();
+        var src=ctx.createBufferSource();
+        src.buffer=buf;src.connect(ctx.destination);src.start(0);
+        return;
+      }catch(err){}
+    }
+    loadBuf();
+    if(!snd)return;
+    try{
+      if(!snd.paused){var c=snd.cloneNode();c.play();return}
       snd.currentTime=0;
       var p=snd.play();
-      if(p&&p.then)p.then(function(){primed=true},function(){lastPlay=0});
+      if(p&&p.catch)p.catch(function(){lastPlay=0});
     }catch(err){lastPlay=0}
   }
 
   /* the cover tap is the first user gesture: it unlocks audio for the whole session */
   var unlocked=false;
   function unlock(){
-    if(!snd||unlocked)return;
-    try{
-      snd.muted=true;
-      var p=snd.play();
-      var done=function(ok){try{snd.pause();snd.currentTime=0}catch(e){}snd.muted=false;if(ok){unlocked=true;primed=true}};
-      if(p&&p.then)p.then(function(){done(true)},function(){done(false)});
-      else done(true);
-    }catch(err){snd.muted=false}
+    if(unlocked)return;
+    unlocked=true;
+    try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(err){}
+    if(ctx){
+      try{
+        wake();
+        var b=ctx.createBuffer(1,1,22050),sb=ctx.createBufferSource();
+        sb.buffer=b;sb.connect(ctx.destination);sb.start(0); 
+        startKeep();
+        loadBuf();
+      }catch(err){}
+    }
+    if(snd){
+      try{
+        snd.muted=true;
+        var p=snd.play();
+        var done=function(){try{snd.pause();snd.currentTime=0}catch(e){}snd.muted=false};
+        if(p&&p.then)p.then(done,done);else done();
+      }catch(err){snd.muted=false}
+    }
   }
   var cover=document.getElementById('cover'),main=document.querySelector('main'),opened=false;
   function openCover(){
@@ -305,6 +365,7 @@ body.unfold #ask>*{animation:rise .7s ease-out .85s both}
   home();
 
   yes.addEventListener('click',function(){
+    stopKeep();
     document.body.classList.add('done');
     var H='M12 20.5S3.5 15 3.5 8.9A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.3C20.5 15 12 20.5 12 20.5z',S='<svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"',bits=[S+' fill="currentColor"><path d="'+H+'"/></svg>',S+' fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="'+H+'"/></svg>',S+' fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/></svg>'],cols=['#bf757b','#a85c68','#d9a3a8','#c7a29f'];
     for(var i=0;i<50;i++){
