@@ -376,10 +376,21 @@ main{z-index:1}
   ['pointerenter','pointerover','mouseenter','mouseover','pointerdown','mousedown','touchstart','touchmove','touchend','click','focus','dblclick','contextmenu'].forEach(function(t){
     no.addEventListener(t,dodge,{passive:false});
   });
+  var pressingYes=false;
+  function insideYes(x,y){
+    var r=yes.getBoundingClientRect(),m=4;
+    return x>=r.left-m&&x<=r.right+m&&y>=r.top-m&&y<=r.bottom+m;
+  }
+  yes.addEventListener('pointerdown',function(){pressingYes=true});
+  yes.addEventListener('touchstart',function(){pressingYes=true},{passive:true});
+  ['pointerup','pointercancel','touchend','touchcancel'].forEach(function(t){
+    document.addEventListener(t,function(){setTimeout(function(){pressingYes=false},0)},true);
+  });
   function track(x,y,e){
     mx=x;my=y;
     if(!ready||answered)return;
-    var r=no.getBoundingClientRect(),pad=70;
+    if(pressingYes||insideYes(x,y))return;
+    var r=no.getBoundingClientRect(),pad=0;
     if(!r.width||!r.height)return;
     if(x>r.left-pad&&x<r.right+pad&&y>r.top-pad&&y<r.bottom+pad){flee();if(canSound(e))playNo();}
   }
