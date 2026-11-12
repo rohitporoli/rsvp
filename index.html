@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>One Little Question 💗</title>
+<title>One Little Question 💛</title>
 <meta name="description" content="We have a little question for you. Tap to answer.">
-<meta name="theme-color" content="#fbf8f4">
+<meta name="theme-color" content="#0e1126">
 <meta property="og:type" content="website">
-<meta property="og:title" content="You’re invited 💗">
+<meta property="og:title" content="You’re invited 💛">
 <meta property="og:description" content="We have a little question for you. Tap to answer.">
 <meta property="og:url" content="https://rohitporoli.github.io/rsvp/">
 <meta property="og:image" content="https://rohitporoli.github.io/rsvp/og-image-1200x630.png">
@@ -15,9 +15,9 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="You’re invited. We have a little question for you. Tap to answer.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="You’re invited 💗">
+<meta name="twitter:title" content="You’re invited 💛">
 <meta name="twitter:description" content="We have a little question for you. Tap to answer.">
-<meta name="twitter:image" content="og-image-1200x630.png">
+<meta name="twitter:image" content="https://rohitporoli.github.io/rsvp/og-image-1200x630.png">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
@@ -27,32 +27,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#fbf8f4; --card:#fefcf9; --edge:#ece5df; --ink:#463a36; --rose:#a85c68; --btn:#bf757b; --btn-ink:#fff;
-  --eyebrow:#c0707c; --sub:#8c7b72; --orn:#c58f95; --no-bg:#fffefd; --no-line:#d9d2cc; --no-ink:#6f625c;
-  --glow:rgba(196,128,128,.22);
-  --env:#ecd6d2; --env-back:#dfc3bf; --env-flap:#f3e1de;
-  --sh-card:0 40px 140px var(--glow),0 12px 44px rgba(196,128,128,.12);
-  --sh-yes:0 18px 32px -10px rgba(191,117,123,.65),0 6px 12px -4px rgba(191,117,123,.35);
-  --sh-no:0 14px 28px -12px rgba(70,58,54,.3),0 4px 10px -4px rgba(70,58,54,.14);
+  --bg:#0e1126; --card:#151a36; --edge:#2a3163; --ink:#eef0ff; --rose:#f2c96b; --btn:#f2c96b; --btn-ink:#14213d;
+  --eyebrow:#9aa3e6; --sub:#9aa3e6; --orn:#6f79c9; --no-bg:#1b2147; --no-line:#3a4380; --no-ink:#c8cdf5;
+  --glow:rgba(242,201,107,.10);
+  --sh-card:0 40px 140px rgba(0,0,0,.55),0 12px 44px var(--glow);
+  --sh-yes:0 18px 32px -10px rgba(242,201,107,.5),0 6px 12px -4px rgba(242,201,107,.3);
+  --sh-no:0 14px 28px -12px rgba(0,0,0,.8),0 4px 10px -4px rgba(0,0,0,.5);
   --bw:clamp(104px,calc((100vw - 100px)/2),285px);
   --bh:min(calc(var(--bw)*.41),13.2vh);
   --gap:clamp(14px,2vw,33px);
-  color-scheme:light;
+  color-scheme:dark;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#181112; --card:#221819; --edge:#3a2c2e; --ink:#f4e9e4; --rose:#e19aa4; --eyebrow:#e0929c; --sub:#bda99f; --orn:#b98c8c;
-    --no-bg:#2b2023; --no-line:#4c3d40; --no-ink:#d9c8c0; --glow:rgba(0,0,0,.6); --env:#4b3538; --env-back:#3b2a2d; --env-flap:#5a4144;
-    --sh-no:0 14px 28px -12px rgba(0,0,0,.8),0 4px 10px -4px rgba(0,0,0,.5); color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#181112; --card:#221819; --edge:#3a2c2e; --ink:#f4e9e4; --rose:#e19aa4; --eyebrow:#e0929c; --sub:#bda99f; --orn:#b98c8c;
-  --no-bg:#2b2023; --no-line:#4c3d40; --no-ink:#d9c8c0; --glow:rgba(0,0,0,.6); --env:#4b3538; --env-back:#3b2a2d; --env-flap:#5a4144;
-  --sh-no:0 14px 28px -12px rgba(0,0,0,.8),0 4px 10px -4px rgba(0,0,0,.5); color-scheme:dark;
 }
 html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
 *{box-sizing:border-box}
@@ -82,7 +69,7 @@ h1 em{color:var(--rose);font-style:italic}
   display:inline-flex;align-items:center;justify-content:center;gap:.32em;line-height:1;
 }
 #yes{background:var(--btn);color:var(--btn-ink);border:0;box-shadow:var(--sh-yes);transition:transform .2s ease,box-shadow .2s ease}
-#yes:hover,#yes:focus-visible{transform:translateY(-3px);box-shadow:0 26px 40px -12px rgba(191,117,123,.75),0 8px 14px -4px rgba(191,117,123,.4)}
+#yes:hover,#yes:focus-visible{transform:translateY(-3px);box-shadow:0 26px 40px -12px rgba(242,201,107,.6),0 8px 14px -4px rgba(242,201,107,.35)}
 #yes:focus-visible{outline:3px solid var(--rose);outline-offset:4px}
 #yes svg{width:.66em;height:.66em}
 #slot{display:inline-block;width:var(--bw);height:var(--bh);min-height:56px}
@@ -94,6 +81,17 @@ body.done #thanks{display:block}
 #thanks h2{margin:0 0 .25em;font-family:"Newsreader",Georgia,serif;font-weight:400;font-size:clamp(40px,min(12vw,11vh),96px);line-height:1.04;letter-spacing:-.025em}
 #thanks h2 em{color:var(--rose)}
 #thanks p{margin:0;font-size:clamp(15px,2.6vh,22px);color:var(--sub)}
+#thanks .couple{margin:clamp(6px,1.5vh,14px) 0 0;padding-top:0;position:relative}
+#thanks .couple::before{content:"";display:block;width:min(180px,40%);height:1px;margin:0 auto clamp(10px,2vh,16px);background:linear-gradient(to right,transparent,var(--orn),transparent)}
+#thanks .couple .eyebrow{margin-bottom:clamp(10px,2.4vh,22px);letter-spacing:.14em;line-height:1.5;font-size:clamp(11px,1.7vh + .2vw,15px);color:var(--eyebrow)}
+#thanks .names{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:clamp(10px,2.4vw,28px);
+  font-family:"Newsreader",Georgia,serif;font-weight:400;font-size:clamp(34px,min(10vw,9vh),84px);line-height:1.05;letter-spacing:-.02em;color:var(--ink)}
+#thanks .names em{color:var(--rose)}
+#thanks .names svg{width:.5em;height:.5em;color:var(--btn);flex:none;animation:beat2 1.8s ease-in-out infinite}
+@keyframes beat2{0%,60%,100%{transform:scale(1)}15%{transform:scale(1.18)}30%{transform:scale(1)}}
+#thanks .tag{margin-top:clamp(10px,2.4vh,20px);font-family:"Newsreader",Georgia,serif;font-style:italic;color:var(--rose);font-size:clamp(16px,2.6vh,24px)}
+body.done #thanks .couple{animation:rise .8s ease-out .5s both}
+@media (prefers-reduced-motion:reduce){#thanks .names svg{animation:none}body.done #thanks .couple{animation-duration:.01s!important;animation-delay:0s!important}}
 .confetti{position:fixed;top:-30px;z-index:9;pointer-events:none;will-change:transform;animation:fall linear forwards}
 @keyframes fall{to{transform:translate3d(0,112vh,0) rotate(540deg)}}
 @media (prefers-reduced-motion:reduce){.confetti{animation-duration:2s!important}}
@@ -102,47 +100,40 @@ main{position:relative;overflow:hidden;transform-origin:50% 0;will-change:transf
 body.covered{overflow:hidden;height:100svh}
 body.covered main{opacity:.01;animation:none}
 body.covered #no,body.unfold #no{visibility:hidden}
-#cover{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-items:center;align-content:center;gap:clamp(22px,5vh,44px);
-  cursor:pointer;outline:0;padding:env(safe-area-inset-top,0px) 16px env(safe-area-inset-bottom,0px);-webkit-tap-highlight-color:transparent}
+#cover{position:fixed;inset:0;z-index:50;background:#0e1126;color:#eef0ff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding:calc(env(safe-area-inset-top,0px) + clamp(48px,11vh,90px)) 24px calc(env(safe-area-inset-bottom,0px) + clamp(40px,8vh,70px));
+  cursor:pointer;outline:0;overflow:hidden;-webkit-tap-highlight-color:transparent}
 #cover.leaving{opacity:0;pointer-events:none;visibility:hidden;transition:opacity .8s ease,visibility 0s linear .8s}
-#cover .line{margin:0;font-family:"Newsreader",Georgia,serif;font-style:italic;font-size:clamp(20px,3.4vh + 1vw,30px);color:var(--rose);letter-spacing:-.01em;text-align:center}
-#cover .hint{margin:0;font-size:clamp(13px,2vh,16px);color:var(--sub);letter-spacing:.04em;animation:pulse 2.2s ease-in-out infinite}
+#cover .top{margin:0;font-size:clamp(11px,1.6vh + .2vw,14px);font-weight:700;letter-spacing:.34em;text-transform:uppercase;color:#9aa3e6;text-align:center}
+#cover .sky{display:block;height:auto;overflow:visible}
+#cover .sky-m{width:min(300px,78vw,36vh)}
+#cover .sky-d{display:none;width:min(1000px,86vw)}
+#cover .bottom{display:flex;flex-direction:column;align-items:center;gap:clamp(12px,2.4vh,22px)}
+#cover .line{margin:0;font-family:"Newsreader",Georgia,serif;font-style:italic;font-size:clamp(26px,min(8.6vw,4.2vh),40px);line-height:1.1;text-align:center;letter-spacing:-.01em}
+#cover .hint{margin:0;font-size:clamp(12px,1.8vh,14px);letter-spacing:.14em;color:#9aa3e6;animation:pulse 2.2s ease-in-out infinite}
+#cover .c{display:none}
+@media (min-width:760px){
+  #cover .sky-m{display:none}#cover .sky-d{display:block}
+  #cover .line{font-size:clamp(40px,min(4.4vw,7.6vh),64px);line-height:1.08}
+}
+@media (hover:hover) and (pointer:fine){#cover .t{display:none}#cover .c{display:inline}}
 #cover.opening .hint{animation:none;opacity:0;transition:opacity .25s}
 @keyframes pulse{50%{opacity:.35}}
-.env{position:relative;width:min(380px,78vw,56vh);aspect-ratio:10/7;perspective:900px;will-change:transform;animation:bob 4.5s ease-in-out infinite}
-#cover.opening .env{animation-play-state:paused}
-@keyframes bob{50%{transform:translateY(-8px) rotate(-.6deg)}}
-.env .back{position:absolute;inset:0;background:var(--env-back);border-radius:6px;box-shadow:0 28px 36px var(--glow)}
-.env .letter{position:absolute;left:7%;right:7%;top:7%;height:82%;background:var(--card);border:1px solid var(--edge);border-radius:4px;z-index:2;
-  display:grid;place-items:center;align-content:center;gap:.5em;text-align:center;color:var(--rose);
-  font-family:"Newsreader",Georgia,serif;font-style:italic;font-size:clamp(15px,2.4vh + .6vw,22px);
-  will-change:transform;transition:transform 1.1s cubic-bezier(.45,.05,.2,1) .4s}
-.env .letter svg{width:1.4em;height:1.4em}
-.env .front{position:absolute;inset:0;background:var(--env);border-radius:6px;z-index:3;will-change:transform;clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%)}
-.env .flap{position:absolute;left:0;right:0;top:0;height:58%;background:var(--env-flap);z-index:4;transform-origin:50% 0;
-  will-change:transform;clip-path:polygon(0 0,100% 0,50% 100%)}
-.env .seal{position:absolute;left:50%;top:58%;width:17%;aspect-ratio:1;z-index:5;transform:translate(-50%,-50%);border-radius:50%;
-  background:var(--btn);color:var(--btn-ink);display:grid;place-items:center;box-shadow:0 6px 14px -4px rgba(191,117,123,.7),inset 0 -3px 6px rgba(0,0,0,.12);
-  animation:beat 2.2s ease-in-out infinite;transition:opacity .25s}
-.env .seal svg{width:52%;height:52%}
-@keyframes beat{0%,60%,100%{transform:translate(-50%,-50%) scale(1)}15%{transform:translate(-50%,-50%) scale(1.1)}30%{transform:translate(-50%,-50%) scale(1)}}
-#cover.opening .seal{animation:none;opacity:0}
-#cover.opening .seal::after{animation:none}
-#cover.opening .flap{animation:flap-open .65s both}
-@keyframes flap-open{
-  0%{transform:rotateX(0deg);z-index:4;animation-timing-function:ease-in}
-  49.99%{z-index:4}
-  50%{transform:rotateX(90deg);z-index:1;animation-timing-function:ease-out}
-  100%{transform:rotateX(180deg);z-index:1}}
-#cover.opening .letter{transform:translateY(-52%)}
-@media (prefers-reduced-motion:reduce){.env,.seal,#cover .hint{animation:none!important}.env .letter,.env .flap{transition-duration:.01s!important;transition-delay:0s!important;animation-duration:.01s!important;animation-delay:0s!important}}
-
-.env .seal::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--btn);animation:ring 2.2s ease-out infinite;pointer-events:none}
-@keyframes ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+#cover .tw{animation:tw 3s ease-in-out infinite}
+#cover .tw:nth-of-type(2n){animation-delay:-1s}#cover .tw:nth-of-type(3n){animation-delay:-2s}
+@keyframes tw{50%{opacity:.3}}
+#cover .halo,#cover .gold{transform-box:fill-box;transform-origin:center}
+#cover .halo{animation:halo 2.6s ease-in-out infinite}
+@keyframes halo{50%{transform:scale(1.4);opacity:.1}}
+#cover .path{transition:stroke .6s,stroke-width .6s}
+#cover.opening .path{stroke:#f2c96b;stroke-width:2}
+#cover.opening .gold{animation:flash 1.2s ease-out both}
+@keyframes flash{40%{transform:scale(1.7)}100%{transform:scale(1.25)}}
+@media (prefers-reduced-motion:reduce){#cover .tw,#cover .halo,#cover .hint{animation:none!important}#cover.opening .gold{animation-duration:.01s!important}}
 main::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
   background:
-   linear-gradient(to bottom,transparent calc(33.333% - 46px),rgba(70,58,54,.12) calc(33.333% - 1px),rgba(255,255,255,.14) 33.333%,transparent calc(33.333% + 46px)),
-   linear-gradient(to bottom,transparent calc(66.666% - 46px),rgba(70,58,54,.12) calc(66.666% - 1px),rgba(255,255,255,.14) 66.666%,transparent calc(66.666% + 46px))}
+   linear-gradient(to bottom,transparent calc(33.333% - 46px),rgba(0,0,0,.3) calc(33.333% - 1px),rgba(255,255,255,.07) 33.333%,transparent calc(33.333% + 46px)),
+   linear-gradient(to bottom,transparent calc(66.666% - 46px),rgba(0,0,0,.3) calc(66.666% - 1px),rgba(255,255,255,.07) 66.666%,transparent calc(66.666% + 46px))}
 body.unfold main{animation:unfold 1.6s cubic-bezier(.35,.05,.15,1) both,unfold-fade .5s ease-out both}
 body.unfold main::after{animation:crease 1.4s ease-in-out forwards}
 body.unfold #ask{animation:rise .7s ease-out .85s both}
@@ -153,22 +144,44 @@ body.unfold #ask{animation:rise .7s ease-out .85s both}
 @keyframes crease{from{opacity:1}to{opacity:0}}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){body.unfold main,body.unfold main::after,body.unfold #ask{animation-duration:.01s!important;animation-delay:0s!important}}
+
+body::before,body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;animation:twk 5s ease-in-out infinite}
+body::before{background-image:
+  radial-gradient(1.6px 1.6px at 8% 14%,#eef0ff,transparent),radial-gradient(1.2px 1.2px at 22% 62%,#eef0ff,transparent),
+  radial-gradient(2px 2px at 36% 9%,#f2c96b,transparent),radial-gradient(1.2px 1.2px at 51% 88%,#eef0ff,transparent),
+  radial-gradient(1.6px 1.6px at 67% 21%,#eef0ff,transparent),radial-gradient(1.2px 1.2px at 79% 74%,#eef0ff,transparent),
+  radial-gradient(2px 2px at 91% 40%,#f2c96b,transparent),radial-gradient(1.2px 1.2px at 14% 91%,#eef0ff,transparent)}
+body::after{animation-delay:-2.5s;background-image:
+  radial-gradient(1.2px 1.2px at 4% 46%,#eef0ff,transparent),radial-gradient(1.6px 1.6px at 29% 33%,#eef0ff,transparent),
+  radial-gradient(1.2px 1.2px at 44% 52%,#eef0ff,transparent),radial-gradient(1.6px 1.6px at 58% 6%,#eef0ff,transparent),
+  radial-gradient(2px 2px at 73% 93%,#f2c96b,transparent),radial-gradient(1.2px 1.2px at 86% 12%,#eef0ff,transparent),
+  radial-gradient(1.6px 1.6px at 96% 66%,#eef0ff,transparent),radial-gradient(1.2px 1.2px at 17% 27%,#eef0ff,transparent)}
+@keyframes twk{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){body::before,body::after{animation:none}}
+main{z-index:1}
 </style>
 </head>
 <body class="covered">
 <div id="cover" role="button" tabindex="0" aria-label="Tap to open your invitation">
-  <p class="line">We have a little question for you</p>
-  <div class="env" aria-hidden="true">
-    <div class="back"></div>
-    <div class="letter">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 20.5S3.5 15 3.5 8.9A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.3C20.5 15 12 20.5 12 20.5z"/></svg>
-      <span>You&rsquo;re invited</span>
-    </div>
-    <div class="front"></div>
-    <div class="flap"></div>
-    <div class="seal"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"><path d="M7.5 4.5L17 12.5l-4.2.9 2.4 5.2-2.2 1.1-2.4-5.1-3.1 3z"/><path d="M4 8.5H2.2M5 5L3.7 3.7M8.5 3.4V1.7" fill="none" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+  <p class="top">Out of all the stars</p>
+  <svg class="sky sky-m" viewBox="0 0 300 300" role="img" aria-label="Two bright stars joined by a line of smaller stars">
+    <path class="path" d="M60 190 L110 120 L170 150 L205 85 L245 120" fill="none" stroke="#6f79c9" stroke-width="1.2" stroke-dasharray="3 5"/>
+    <g fill="#eef0ff"><circle cx="110" cy="120" r="3"/><circle cx="170" cy="150" r="3"/><circle cx="205" cy="85" r="3"/>
+    <circle class="tw" cx="40" cy="60" r="1.6"/><circle class="tw" cx="260" cy="40" r="1.6"/><circle class="tw" cx="130" cy="250" r="1.6"/><circle class="tw" cx="270" cy="230" r="1.6"/><circle class="tw" cx="20" cy="230" r="1.6"/></g>
+    <g fill="#f2c96b" opacity=".25"><circle class="halo" cx="60" cy="190" r="20"/><circle class="halo" cx="245" cy="120" r="20"/></g>
+    <g fill="#f2c96b"><circle class="gold" cx="60" cy="190" r="9"/><circle class="gold" cx="245" cy="120" r="9"/></g>
+  </svg>
+  <svg class="sky sky-d" viewBox="0 0 1000 300" role="img" aria-label="Two bright stars joined by a line of smaller stars">
+    <path class="path" d="M120 220 L280 120 L450 170 L600 70 L760 140 L880 90" fill="none" stroke="#6f79c9" stroke-width="1.4" stroke-dasharray="3 6"/>
+    <g fill="#eef0ff"><circle cx="280" cy="120" r="3.5"/><circle cx="450" cy="170" r="3.5"/><circle cx="600" cy="70" r="3.5"/><circle cx="760" cy="140" r="3.5"/>
+    <circle class="tw" cx="60" cy="50" r="1.8"/><circle class="tw" cx="210" cy="260" r="1.8"/><circle class="tw" cx="380" cy="40" r="1.8"/><circle class="tw" cx="520" cy="270" r="1.8"/><circle class="tw" cx="700" cy="250" r="1.8"/><circle class="tw" cx="940" cy="220" r="1.8"/><circle class="tw" cx="980" cy="40" r="1.8"/><circle class="tw" cx="20" cy="170" r="1.8"/></g>
+    <g fill="#f2c96b" opacity=".22"><circle class="halo" cx="120" cy="220" r="26"/><circle class="halo" cx="880" cy="90" r="26"/></g>
+    <g fill="#f2c96b"><circle class="gold" cx="120" cy="220" r="11"/><circle class="gold" cx="880" cy="90" r="11"/></g>
+  </svg>
+  <div class="bottom">
+    <p class="line">Two stars found each other.<br>Now we are asking you.</p>
+    <p class="hint"><span class="t">Tap to open</span><span class="c">Click to open</span></p>
   </div>
-  <p class="hint">Tap to open</p>
 </div>
 <main>
   <section id="ask">
@@ -189,7 +202,15 @@ body.unfold #ask{animation:rise .7s ease-out .85s both}
   </section>
   <section id="thanks" aria-live="polite">
     <h2>Yay, see you <em>there!</em></h2>
-    <p>You just made our day.</p>
+    <div class="couple">
+      <p class="eyebrow">Smart move. The other button was too shy anyway</p>
+      <div class="names">
+        <span><em>Manju</em></span>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 20.5S3.5 15 3.5 8.9A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.3C20.5 15 12 20.5 12 20.5z"/></svg>
+        <span><em>Rohit</em></span>
+      </div>
+      <p class="tag">Bride &amp; Groom</p>
+    </div>
   </section>
 </main>
 <button id="no" class="btn" type="button">No</button>
@@ -372,7 +393,7 @@ body.unfold #ask{animation:rise .7s ease-out .85s both}
   yes.addEventListener('click',function(){
     answered=true;
     document.body.classList.add('done');
-    var H='M12 20.5S3.5 15 3.5 8.9A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.3C20.5 15 12 20.5 12 20.5z',S='<svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"',bits=[S+' fill="currentColor"><path d="'+H+'"/></svg>',S+' fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="'+H+'"/></svg>',S+' fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/></svg>'],cols=['#bf757b','#a85c68','#d9a3a8','#c7a29f'];
+    var H='M12 20.5S3.5 15 3.5 8.9A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.5 2.3C20.5 15 12 20.5 12 20.5z',S='<svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"',bits=[S+' fill="currentColor"><path d="'+H+'"/></svg>',S+' fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="'+H+'"/></svg>',S+' fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/></svg>'],cols=['#f2c96b','#e2b857','#9aa3e6','#eef0ff'];
     var frag=document.createDocumentFragment(),pieces=[];
     for(var i=0;i<50;i++){
       var c=document.createElement('span');c.className='confetti';
